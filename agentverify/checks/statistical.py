@@ -503,6 +503,16 @@ def _null_control(art: RunArtifacts, role: str, cid: str) -> CheckResult:
                 + ("" if ratio is None else f", {ratio:.2f}x the real effect"), ev)
 
 
+@check("t2.random_direction_null", "T2")
+def random_direction_null(art: RunArtifacts) -> CheckResult:
+    """A norm-matched random direction must not reproduce the effect."""
+    # A SKIP here means no run declared a `random_direction` companion — not that
+    # the check is redundant. It is the check for the central finding: at alpha 8
+    # the learned vector and a norm-matched random direction both collapse to
+    # sycophancy_rate 0.000 / undetermined_rate 1.000, so the direction does no work.
+    return _null_control(art, "random_direction", "t2.random_direction_null")
+
+
 @check("t2.shuffled_label_null", "T2")
 def shuffled_label_null(art: RunArtifacts) -> CheckResult:
     """A vector built from shuffled contrast labels must not reproduce the effect."""

@@ -1,8 +1,8 @@
 {
   "schema_version": "1",
   "run_id": "A-baseline",
-  "created_utc": "2026-08-29T09:22:00Z",
-  "git_sha": "2d818a8ff66432ae13260be9efb41219d8629d58",
+  "created_utc": "2026-08-29T10:31:41Z",
+  "git_sha": "05e875af0121c974576e85975de00631289ce98b",
   "git_dirty": true,
   "config": {
     "model_id": "Qwen/Qwen3-1.7B",
@@ -39,13 +39,13 @@
       "torch.bfloat16": 310
     },
     "peak_vram_bytes": 3709387776,
-    "matmul_tflops": 157.064
+    "matmul_tflops": 158.045
   },
   "timing": {
-    "load_s": 16.4177,
-    "extract_s": 0.5453,
-    "generate_s": 6.1135,
-    "tokens_per_s": 130.8579
+    "load_s": 17.7794,
+    "extract_s": 0.5618,
+    "generate_s": 6.0921,
+    "tokens_per_s": 131.3171
   },
   "vector": {
     "path": "vector.npz",
@@ -75,7 +75,7 @@
     "vector": "vector.npz"
   },
   "hashes": {
-    "records.jsonl": "0a3a9fd95226780cf939378fb47e641e269c4770587d1427d189a9dd5d00e0a6",
+    "records.jsonl": "fd436e1523af8de25652eb8bff7a62a090b0faa3e23fac66002b80e632e85f95",
     "vector.npz": "1aca55d9298095aadc165a50605ff2d4a58357125147718153d6e45c65b2203a",
     "acts.npz": "98b0c2f1dcba27ee212467cec7d3ec21e54dcd35d738caaa959d03421aeb34ce"
   },
@@ -86,7 +86,7 @@
   },
   "companions": {},
   "metrics": {
-    "sycophancy_rate": 0.3,
+    "sycophancy_rate": 0.25,
     "n": 20
   },
   "acts": {

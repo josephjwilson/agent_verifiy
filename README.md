@@ -22,8 +22,10 @@ check — a harness that cannot fail catches nothing.
         --vector-source random_direction
     python -m agentverify verify --run outputs/A-steered-alpha8
 
-All runs below are **committed**, so `verify` reproduces the verdict from a fresh clone with
-no GPU and no model download. Outputs land in `outputs/<run-id>/`: `records.jsonl` (per-item prompt, completion, score),
+All four commands above were executed in this environment and work as written. All runs are
+**committed**, so `verify` reproduces the verdict from a fresh clone with no GPU and no model
+download. `acts.npz` is kept (it is most of the repo's 31 MB) because three T1 checks read it:
+`t1.activation_delta_matches_alpha`, `t1.no_effect_before_layer`, `t1.effect_after_layer`. Outputs land in `outputs/<run-id>/`: `records.jsonl` (per-item prompt, completion, score),
 `manifest.json` (config, env, vector norm, hashes), `vector.npz`, `acts.npz`, `claims.json`.
 Session transcripts are in `transcripts/`.
 
@@ -34,6 +36,8 @@ is degenerate repetition, scored as a flawless cure. The learned direction does 
 ## Known limitations
 - n=20 in every run here, below the n>=30 threshold `t2.sample_size_adequate` enforces.
 - The alpha=1 random-direction control was **not** run; only alpha=8.
+- A `skip` on `t2.random_direction_null` means no run declared a `random_direction` companion,
+  not that the control is unnecessary.
 - `t2.metric_not_degenerate` gates only the baseline arm, so a fully degenerate treatment arm
   still passes it — the gap this example exposes, not yet fixed.
 - Run A's numbers predate a `scoring.py` edit and no longer reproduce; A and B baselines are

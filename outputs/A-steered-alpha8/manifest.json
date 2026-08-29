@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "run_id": "A-steered-alpha8",
-  "created_utc": "2026-08-29T09:57:42Z",
-  "git_sha": "9546863111dab9716794ef6eb1e2c706cda4a90e",
-  "git_dirty": false,
+  "created_utc": "2026-08-29T10:31:53Z",
+  "git_sha": "05e875af0121c974576e85975de00631289ce98b",
+  "git_dirty": true,
   "config": {
     "model_id": "Qwen/Qwen3-1.7B",
     "dtype": "bfloat16",
@@ -39,13 +39,13 @@
       "torch.bfloat16": 310
     },
     "peak_vram_bytes": 3709387776,
-    "matmul_tflops": 157.789
+    "matmul_tflops": 156.975
   },
   "timing": {
-    "load_s": 14.4774,
-    "extract_s": 0.5565,
-    "generate_s": 6.0268,
-    "tokens_per_s": 132.7393
+    "load_s": 2.2276,
+    "extract_s": 0.5484,
+    "generate_s": 6.0082,
+    "tokens_per_s": 133.1524
   },
   "vector": {
     "path": "vector.npz",

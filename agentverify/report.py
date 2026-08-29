@@ -68,6 +68,7 @@ EXPECTED_CHECKS: dict[str, str] = {
     "t2.sample_size_adequate": "T2",
     "t2.metric_not_degenerate": "T2",
     "t2.effect_ci_excludes_zero": "T2",
+    "t2.random_direction_null": "T2",
     "t2.shuffled_label_null": "T2",
     "t2.selection_declared": "T2",
     # T3/T4 — checks/integrity.py

@@ -235,6 +235,7 @@ T2 (`checks/statistical.py`)
 - `t2.sample_size_adequate` — n >= 30 and n matches counts
 - `t2.metric_not_degenerate` — baseline rate strictly between 0 and 1
 - `t2.effect_ci_excludes_zero` — bootstrap CI of the paired delta
+- `t2.random_direction_null` — companion `random_direction` (norm-matched) shows no effect
 - `t2.shuffled_label_null` — companion `shuffled` shows no significant effect
 - `t2.selection_declared` — if a layer/alpha sweep happened, config records it
 
