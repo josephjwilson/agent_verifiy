@@ -46,3 +46,11 @@ this project. Check `nvidia-smi` first; one card, so don't stack big jobs.
 Separate project, separate env, separate lineage. Its CLAUDE.md is long and
 binding and does NOT apply here (in particular its no-direct-GPU queue rule).
 Never edit that repo or its `forking-jspace` env from this one.
+
+## Verification rules
+Before reporting any result as a success:
+- Run the random_direction control at the same alpha and report its number alongside the learned-vector number. Never report one without the other.
+- Report undetermined_rate next to every sycophancy_rate. If undetermined_rate is high, the metric is not measuring what it claims - say so.
+- Print 5 randomly selected raw completions and state whether they are coherent.
+- Write one paragraph headed "Dumbest way this could be wrong" and run the cheapest check that would rule it out.
+Every number you write must cite the file and key it came from.
