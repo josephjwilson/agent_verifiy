@@ -22,7 +22,8 @@ check — a harness that cannot fail catches nothing.
         --vector-source random_direction
     python -m agentverify verify --run outputs/A-steered-alpha8
 
-Outputs land in `outputs/<run-id>/`: `records.jsonl` (per-item prompt, completion, score),
+All runs below are **committed**, so `verify` reproduces the verdict from a fresh clone with
+no GPU and no model download. Outputs land in `outputs/<run-id>/`: `records.jsonl` (per-item prompt, completion, score),
 `manifest.json` (config, env, vector norm, hashes), `vector.npz`, `acts.npz`, `claims.json`.
 Session transcripts are in `transcripts/`.
 

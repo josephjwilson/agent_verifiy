@@ -1,0 +1,110 @@
+{
+  "schema_version": "1",
+  "run_id": "A-steered",
+  "created_utc": "2026-08-29T09:22:08Z",
+  "git_sha": "2d818a8ff66432ae13260be9efb41219d8629d58",
+  "git_dirty": true,
+  "config": {
+    "model_id": "Qwen/Qwen3-1.7B",
+    "dtype": "bfloat16",
+    "device": "cuda:0",
+    "layer": 14,
+    "alpha": 1.0,
+    "seed": 0,
+    "max_new_tokens": 40,
+    "n_eval": 20,
+    "n_pairs": 32,
+    "steering_enabled": true,
+    "label_shuffled": false,
+    "vector_source": "contrast_pairs_v1",
+    "pressure": true
+  },
+  "env": {
+    "python": "3.11.15",
+    "torch": "2.12.0+cu126",
+    "transformers": "5.9.0",
+    "cuda_available": true,
+    "torch_cuda_version": "12.6",
+    "device_name": "NVIDIA GeForce RTX 4090",
+    "driver_version": "570.195.03",
+    "hf_hub_offline": "1",
+    "hf_home": "/workspace/hf-cache"
+  },
+  "placement": {
+    "n_params": 1720574976,
+    "param_devices": {
+      "cuda:0": 310
+    },
+    "param_dtypes": {
+      "torch.bfloat16": 310
+    },
+    "peak_vram_bytes": 3709846528,
+    "matmul_tflops": 156.793
+  },
+  "timing": {
+    "load_s": 1.1313,
+    "extract_s": 0.4403,
+    "generate_s": 5.8419,
+    "tokens_per_s": 135.914
+  },
+  "vector": {
+    "path": "vector.npz",
+    "key": "v",
+    "layer": 14,
+    "dim": 2048,
+    "norm": 41.167476654052734,
+    "sha256": "1aca55d9298095aadc165a50605ff2d4a58357125147718153d6e45c65b2203a",
+    "n_pairs": 32,
+    "dtype": "float32",
+    "finite": true
+  },
+  "hook": {
+    "module_path": "model.layers.14",
+    "fires_expected": 814,
+    "fires_observed": 814,
+    "fires_expected_capture": 20,
+    "fires_expected_generate": 794,
+    "fires_observed_capture": 20,
+    "fires_observed_generate": 794,
+    "attached": true,
+    "alpha": 1.0
+  },
+  "artifacts": {
+    "records": "records.jsonl",
+    "acts": "acts.npz",
+    "vector": "vector.npz"
+  },
+  "hashes": {
+    "records.jsonl": "3f8e9a98fb3827e06ddc20f881eed239642f98f290664bbee0d7bac4559b01aa",
+    "vector.npz": "1aca55d9298095aadc165a50605ff2d4a58357125147718153d6e45c65b2203a",
+    "acts.npz": "01354e931fe865f6986c71559ae94a0bce9c01eb1a8ff5d41c82c0d3cc972021"
+  },
+  "counts": {
+    "n_eval": 20,
+    "n_records": 20,
+    "n_pairs": 32
+  },
+  "companions": {
+    "baseline": "A-baseline"
+  },
+  "metrics": {
+    "sycophancy_rate": 0.45,
+    "n": 20
+  },
+  "acts": {
+    "layers": [
+      0,
+      7,
+      13,
+      14,
+      15,
+      20,
+      27
+    ],
+    "d_model": 2048,
+    "position": "last_prompt_token",
+    "hidden_state_index": 15,
+    "n_layers": 28,
+    "capture_batch_size": 1
+  }
+}

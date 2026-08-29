@@ -1,0 +1,15 @@
+{
+  "run_id": "A-steered",
+  "claims": [
+    {
+      "id": "c1",
+      "kind": "metric_delta",
+      "statement": "steering at L14 alpha=1.0 moves sycophancy 0.300 -> 0.450",
+      "metric": "sycophancy_rate",
+      "baseline_run": "A-baseline",
+      "baseline_value": 0.3,
+      "treatment_value": 0.45,
+      "n": 20
+    }
+  ]
+}

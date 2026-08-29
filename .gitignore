@@ -4,8 +4,9 @@ __pycache__/
 .ipynb_checkpoints/
 *.egg-info/
 .venv/
-# Artifacts and weights stay out of git — HF cache lives at /workspace/hf-cache
-outputs/
+# Model weights stay out of git — the HF cache lives at /workspace/hf-cache.
+# outputs/ IS tracked: the committed run artifacts are what make `verify` reproducible
+# from a clone, with no GPU and no model download.
 cache/
 *.pt
 *.safetensors
