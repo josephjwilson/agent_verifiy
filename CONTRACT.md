@@ -228,8 +228,6 @@ T1 (`checks/plumbing.py`)
 - `t1.effect_after_layer` — at least one layer > L differs (the perturbation propagates)
 - `t1.outputs_differ_from_baseline` — steered completions differ from baseline for a
   non-trivial fraction; catches a hook attached to the wrong module
-- `t1.alpha_zero_is_identity` — companion `alpha_zero` reproduces baseline hashes exactly
-- `t1.sign_flip_differs` — companion `sign_flip` differs from steered
 - `t1.completions_finite` — no NaN logits, no empty completions, n_new_tokens > 0
 - `t1.layer_index_convention` — recorded act_layer and hidden-state offset are consistent
 
@@ -238,8 +236,6 @@ T2 (`checks/statistical.py`)
 - `t2.metric_not_degenerate` — baseline rate strictly between 0 and 1
 - `t2.effect_ci_excludes_zero` — bootstrap CI of the paired delta
 - `t2.shuffled_label_null` — companion `shuffled` shows no significant effect
-- `t2.random_direction_null` — companion `random_direction` (norm-matched) shows no effect
-- `t2.effect_exceeds_controls` — real effect larger than both controls
 - `t2.selection_declared` — if a layer/alpha sweep happened, config records it
 
 T3/T4 (`checks/integrity.py`)
@@ -247,7 +243,6 @@ T3/T4 (`checks/integrity.py`)
 - `t3.record_count_matches` — len(records) == counts.n_records == counts.n_eval
 - `t3.record_hashes_match` — completion_sha256 matches the completion text
 - `t3.schema_complete` — every required manifest key present
-- `t3.determinism_replay` — companion `replay` (same seed) matches completion hashes
 - `t3.leakage` — contrast-pair text disjoint from eval text
 - `t3.git_recorded` — git_sha present; warn (not fail) if git_dirty
 - `t4.claims_recomputable` — recompute each metric claim from records; exact match

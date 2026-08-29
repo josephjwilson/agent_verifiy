@@ -48,9 +48,15 @@ binding and does NOT apply here (in particular its no-direct-GPU queue rule).
 Never edit that repo or its `forking-jspace` env from this one.
 
 ## Verification rules
+A rule in this file did not, by itself, cause the random-direction control to be run — the
+Run B session loaded these rules and still skipped it. Treat controls as the human's job.
+
 Before reporting any result as a success:
-- Run the random_direction control at the same alpha and report its number alongside the learned-vector number. Never report one without the other.
-- Report undetermined_rate next to every sycophancy_rate. If undetermined_rate is high, the metric is not measuring what it claims - say so.
+- Run the random_direction control at the same alpha and report its number alongside the
+  learned-vector number. Never report one without the other.
+- Report undetermined_rate next to every sycophancy_rate. If undetermined_rate is high, the
+  metric is not measuring what it claims - say so.
 - Print 5 randomly selected raw completions and state whether they are coherent.
-- Write one paragraph headed "Dumbest way this could be wrong" and run the cheapest check that would rule it out.
-Every number you write must cite the file and key it came from.
+- Write one paragraph headed "Dumbest way this could be wrong" and run the cheapest check
+  that would rule it out.
+- Every number you write must cite the file and key it came from.

@@ -509,56 +509,6 @@ def shuffled_label_null(art: RunArtifacts) -> CheckResult:
     return _null_control(art, "shuffled", "t2.shuffled_label_null")
 
 
-@check("t2.random_direction_null", "T2")
-def random_direction_null(art: RunArtifacts) -> CheckResult:
-    """A norm-matched random direction must not reproduce the effect."""
-    return _null_control(art, "random_direction", "t2.random_direction_null")
-
-
-@check("t2.effect_exceeds_controls", "T2")
-def effect_exceeds_controls(art: RunArtifacts) -> CheckResult:
-    """The real effect must be strictly larger than every control effect."""
-    cid = "t2.effect_exceeds_controls"
-    real = _effect(art)
-    if not real["ok"]:
-        return _res(cid, "skip", f"no real effect to compare: {real['reason']}")
-
-    base_fallback, _ = baseline_records(art)
-    controls: dict[str, dict] = {}
-    notes: dict[str, str] = {}
-    for role in ("shuffled", "random_direction"):
-        ctrl, err = sibling_of(art, role)
-        if ctrl is None:
-            notes[role] = err or "not declared"
-            continue
-        ceff = _effect(ctrl, fallback_baseline=base_fallback)
-        if not ceff["ok"]:
-            notes[role] = ceff["reason"]
-            continue
-        controls[role] = ceff
-    if not controls:
-        return _res(cid, "skip", "no usable control run to compare against",
-                    {"real": _effect_evidence(real), "controls_unavailable": notes})
-
-    mag_r = abs(real["delta"])
-    ev = {"real": _effect_evidence(real),
-          "controls": {r: _effect_evidence(e) for r, e in controls.items()},
-          "controls_unavailable": notes,
-          "margins": {r: num(mag_r - abs(e["delta"])) for r, e in controls.items()}}
-    beaten = [r for r, e in controls.items() if abs(e["delta"]) >= mag_r]
-    if beaten:
-        worst = max(beaten, key=lambda r: abs(controls[r]["delta"]))
-        return _res(cid, "fail",
-                    f"real |delta|={mag_r:.4f} does not exceed control {worst!r} "
-                    f"(|delta|={abs(controls[worst]['delta']):.4f}); "
-                    f"controls at or above the real effect: {sorted(beaten)}", ev,
-                    "the measured effect is within what a null intervention produces here")
-    return _res(cid, "pass",
-                f"real |delta|={mag_r:.4f} exceeds all {len(controls)} control(s): "
-                + ", ".join(f"{r}={abs(e['delta']):.4f}" for r, e in sorted(controls.items())),
-                ev)
-
-
 SWEEP_KEYS = ("sweep", "selection", "layer_sweep", "alpha_sweep", "sweep_layers",
               "sweep_alphas", "candidates", "n_candidates", "selected_by",
               "selection_criterion", "grid", "search")

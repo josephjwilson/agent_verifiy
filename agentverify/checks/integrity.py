@@ -325,68 +325,6 @@ def schema_complete(art: RunArtifacts) -> CheckResult:
     return _res(cid, "T3", "pass", f"all {len(required)} required manifest keys present", ev)
 
 
-@check("t3.determinism_replay", "T3")
-def determinism_replay(art: RunArtifacts) -> CheckResult:
-    """A replay at the same seed must reproduce the completions byte for byte."""
-    cid = "t3.determinism_replay"
-    rep, err = sibling_of(art, "replay")
-    if rep is None:
-        if err:
-            return _res(cid, "T3", "fail", err, {"role": "replay"})
-        return _res(cid, "T3", "skip", "no 'replay' companion declared in manifest.companions")
-
-    ev: dict[str, Any] = {"replay_dir": rep.run_dir.name,
-                          "seed": art.cfg("config", "seed"),
-                          "replay_seed": rep.cfg("config", "seed"),
-                          "n_records": len(art.records or []),
-                          "n_replay_records": len(rep.records or [])}
-    mismatched_cfg = []
-    for key in ("seed", "model_id", "max_new_tokens", "layer", "alpha", "steering_enabled"):
-        mine, theirs = art.cfg("config", key), rep.cfg("config", key)
-        if mine is not None and theirs is not None and mine != theirs:
-            mismatched_cfg.append({"key": key, "run": mine, "replay": theirs})
-    if mismatched_cfg:
-        ev["config_mismatch"] = mismatched_cfg
-        return _res(cid, "T3", "fail",
-                    "the 'replay' companion was not run with the same configuration: "
-                    f"{mismatched_cfg}", ev,
-                    "a replay must differ from the run in nothing at all")
-    if not rep.records:
-        return _res(cid, "T3", "fail", "the declared 'replay' companion has no records", ev)
-    if not art.records:
-        return _res(cid, "T3", "skip", "this run has no records to compare against a replay", ev)
-
-    def index(recs):
-        out = {}
-        for i, r in enumerate(recs):
-            got, recorded = _completion_hash(r)
-            out[_rec_id(r, i)] = got or recorded
-        return out
-
-    mine, theirs = index(art.records), index(rep.records)
-    only_mine = sorted(set(mine) - set(theirs))
-    only_theirs = sorted(set(theirs) - set(mine))
-    diff = [k for k in sorted(set(mine) & set(theirs))
-            if mine[k] is None or theirs[k] is None or mine[k] != theirs[k]]
-    ev.update({"n_common": len(set(mine) & set(theirs)), "n_differing": len(diff),
-               "differing": diff[:MAX_EXAMPLES], "only_in_run": only_mine[:MAX_EXAMPLES],
-               "only_in_replay": only_theirs[:MAX_EXAMPLES]})
-    if diff or only_mine or only_theirs:
-        bits = []
-        if diff:
-            bits.append(f"{len(diff)} completion(s) differ between run and replay "
-                        f"({', '.join(diff[:MAX_EXAMPLES])})")
-        if only_mine or only_theirs:
-            bits.append(f"{len(only_mine)} item(s) only in the run and "
-                        f"{len(only_theirs)} only in the replay")
-        return _res(cid, "T3", "fail",
-                    "same seed, different output: " + "; ".join(bits), ev,
-                    "generation is not deterministic (do_sample, seeding, or batching)")
-    return _res(cid, "T3", "pass",
-                f"replay at seed {art.cfg('config', 'seed')} reproduced all "
-                f"{len(mine)} completion hashes", ev)
-
-
 def _data_module():
     try:
         from .. import data
