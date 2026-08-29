@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.venv/
+# Artifacts and weights stay out of git — HF cache lives at /workspace/hf-cache
+outputs/
+cache/
+*.pt
+*.safetensors
